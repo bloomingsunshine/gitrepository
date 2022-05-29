@@ -78,64 +78,89 @@
 	exportControl 	"Public"
 	global     	TRUE
 	logical_models 	(list unit_reference_list
-	    (object Class "商家"
-		quid       	"6278E2BB0112"
-		stereotype 	"Actor"
-		visible_modules 	(list dependency_list
-		    (object Dependency_Relationship
-			quid       	"6278E5E503A5"
-			supplier   	"Use Case View::发布促销信息"
-			quidu      	"6278E2D20380")))
-	    (object Class "用户"
-		quid       	"6278E2C8014B"
-		stereotype 	"Actor")
-	    (object UseCase "发布促销信息"
-		quid       	"6278E2D20380")
-	    (object UseCase "获得促销订单"
-		quid       	"6278E2D60000")
-	    (object UseCase "支付促销订单"
-		quid       	"6278E7AD01F4")
-	    (object Association "$UNNAMED$0"
-		quid       	"6278E81C0055"
-		roles      	(list role_list
-		    (object Role "$UNNAMED$1"
-			quid       	"6278E81D02D7"
-			supplier   	"Use Case View::发布促销信息"
-			quidu      	"6278E2D20380"
-			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$2"
-			quid       	"6278E81D02DB"
-			supplier   	"Use Case View::商家"
-			quidu      	"6278E2BB0112")))
-	    (object Association "$UNNAMED$3"
-		quid       	"6278E8780165"
-		roles      	(list role_list
-		    (object Role "$UNNAMED$4"
-			quid       	"6278E87A01AA"
-			supplier   	"Use Case View::获得促销订单"
-			quidu      	"6278E2D60000"
-			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$5"
-			quid       	"6278E87A01AC"
-			supplier   	"Use Case View::用户"
-			quidu      	"6278E2C8014B")))
-	    (object Association "$UNNAMED$6"
-		quid       	"6278E87D0398"
-		roles      	(list role_list
-		    (object Role "$UNNAMED$7"
-			quid       	"6278E87F017C"
-			supplier   	"Use Case View::支付促销订单"
-			quidu      	"6278E7AD01F4"
-			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$8"
-			quid       	"6278E87F017E"
-			supplier   	"Use Case View::用户"
-			quidu      	"6278E2C8014B")))
-	    (object Class_Category "NewPackage"
-		quid       	"6278E63D0181"
-		exportControl 	"Public"
-		logical_models 	(list unit_reference_list)
-		logical_presentations 	(list unit_reference_list)))
+	    (object Mechanism @1
+		logical_models 	(list unit_reference_list
+		    (object Object "注册商家"
+			quid       	"62935AE80334"
+			collaborators 	(list link_list
+			    (object Link
+				quid       	"62935AE80335"
+				supplier   	"网站"
+				quidu      	"62935AE8033B"
+				messages   	(list Messages
+				    (object Message "1.1发布促售信息"
+					quid       	"62935AE80336"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"1"
+					ordinal    	0
+					quidu      	"000000000000"
+					creation   	FALSE)
+				    (object Message "1.1将促销信息公布在网站上"
+					quid       	"62935AE80337"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"1.1"
+					ordinal    	1
+					quidu      	"000000000000"
+					creation   	FALSE))))
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE)
+		    (object Object "注册用户"
+			quid       	"62935AE8033F"
+			collaborators 	(list link_list
+			    (object Link
+				quid       	"62935AE8033E"
+				supplier   	"网站"
+				quidu      	"62935AE8033B"
+				messages   	(list Messages
+				    (object Message "1.2购买促销商品"
+					quid       	"62935AE8033D"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"2"
+					ordinal    	2
+					quidu      	"000000000000"
+					creation   	FALSE)
+				    (object Message "1.2返回促销订单"
+					quid       	"62935AE80340"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"2.1"
+					ordinal    	3
+					quidu      	"000000000000"
+					creation   	FALSE)
+				    (object Message "1.3支付促销订单"
+					quid       	"62935AE80341"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"3"
+					ordinal    	4
+					quidu      	"000000000000"
+					creation   	FALSE)
+				    (object Message "1.3完成商品购买"
+					quid       	"62935AE80342"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"ToClientFromSupplier"
+					sequence   	"3.1"
+					ordinal    	5
+					quidu      	"000000000000"
+					creation   	FALSE))))
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE)
+		    (object Object "网站"
+			quid       	"62935AE8033B"
+			persistence 	"Transient"
+			creationObj 	FALSE
+			multi      	FALSE))))
 	logical_presentations 	(list unit_reference_list
 	    (object UseCaseDiagram "Main"
 		quid       	"39C9261001B7"
@@ -146,187 +171,185 @@
 		origin_x   	0
 		origin_y   	0
 		items      	(list diagram_item_list))
-	    (object UseCaseDiagram "在线商品销售系统"
-		quid       	"6278E2730389"
-		title      	"在线商品销售系统"
+	    (object InteractionDiagram "在线网络销售顺序"
+		mechanism_ref 	@1
+		quid       	"62935ADD0104"
+		title      	"在线网络销售顺序"
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	569
-		origin_y   	0
+		origin_x   	0
+		origin_y   	103
 		items      	(list diagram_item_list
-		    (object ClassView "Class" "Use Case View::商家" @1
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(400, 256)
+		    (object InterObjView "注册商家" @2
+			location   	(448, 352)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
 			    bold       	FALSE
 			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@1
-			    location   	(400, 416)
-			    anchor_loc 	1
-			    nlines     	2
-			    max_width  	325
-			    justify    	0
-			    label      	"商家")
-			icon       	"Actor"
-			icon_style 	"Icon"
-			line_color 	3342489
-			quidu      	"6278E2BB0112"
-			annotation 	8
-			autoResize 	TRUE)
-		    (object UseCaseView "Use Case View::发布促销信息" @2
-			location   	(928, 304)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
+			    underline  	TRUE
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@2
-			    location   	(928, 442)
+			    location   	(448, 352)
+			    fill_color 	13434879
 			    anchor_loc 	1
 			    nlines     	2
-			    max_width  	630
+			    max_width  	282
 			    justify    	0
-			    label      	"发布促销信息")
+			    label      	"注册商家")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"6278E2D20380"
-			height     	118)
-		    (object ClassView "Class" "Use Case View::商家" @3
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(400, 256)
+			quidu      	"62935AE80334"
+			width      	300
+			height     	1198
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @3
+			    location   	(448, 432)
+			    line_color 	3342489
+			    InterObjView 	@2
+			    height     	90
+			    y_coord    	0
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @4
+			    location   	(448, 816)
+			    line_color 	3342489
+			    InterObjView 	@2
+			    height     	212
+			    y_coord    	122
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @5
+			    location   	(448, 928)
+			    line_color 	3342489
+			    InterObjView 	@2
+			    height     	1
+			    y_coord    	-89
+			    Nested     	TRUE))
+		    (object InterObjView "注册用户" @6
+			location   	(1152, 608)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
 			    bold       	FALSE
 			    italics    	FALSE
-			    underline  	FALSE
+			    underline  	TRUE
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@3
-			    location   	(400, 416)
+			    Parent_View 	@6
+			    location   	(1152, 608)
+			    fill_color 	13434879
 			    anchor_loc 	1
 			    nlines     	2
-			    max_width  	325
+			    max_width  	282
 			    justify    	0
-			    label      	"商家")
-			icon       	"Actor"
-			icon_style 	"Icon"
-			line_color 	3342489
-			quidu      	"6278E2BB0112"
-			annotation 	8
-			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$0" @4
-			location   	(637, 274)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"6278E81C0055"
-			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$1" @5
-				Parent_View 	@4
-				location   	(237, 18)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"6278E81D02D7"
-				client     	@4
-				supplier   	@2
-				vertices   	(list Points
-				    (637, 274)
-				    (818, 290))
-				line_style 	0)
-			    (object RoleView "$UNNAMED$2" @6
-				Parent_View 	@4
-				location   	(237, 18)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"6278E81D02DB"
-				client     	@4
-				supplier   	@3
-				vertices   	(list Points
-				    (637, 274)
-				    (457, 259))
-				line_style 	0)))
-		    (object UseCaseView "Use Case View::获得促销订单" @7
-			location   	(928, 816)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@7
-			    location   	(928, 954)
-			    anchor_loc 	1
-			    nlines     	2
-			    max_width  	630
-			    justify    	0
-			    label      	"获得促销订单")
+			    label      	"注册用户")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"6278E2D60000"
-			height     	118)
-		    (object UseCaseView "Use Case View::支付促销订单" @8
-			location   	(928, 1136)
+			quidu      	"62935AE8033F"
+			width      	300
+			height     	942
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @7
+			    location   	(1152, 688)
+			    line_color 	3342489
+			    InterObjView 	@6
+			    height     	90
+			    y_coord    	0
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @8
+			    location   	(1152, 1040)
+			    line_color 	3342489
+			    InterObjView 	@6
+			    height     	420
+			    y_coord    	330
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @9
+			    location   	(1152, 1152)
+			    line_color 	3342489
+			    InterObjView 	@6
+			    height     	1
+			    y_coord    	-89
+			    Nested     	TRUE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @10
+			    location   	(1152, 1360)
+			    line_color 	3342489
+			    InterObjView 	@6
+			    height     	1
+			    y_coord    	-89
+			    Nested     	TRUE))
+		    (object InterObjView "网站" @11
+			location   	(1856, 432)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
 			    bold       	FALSE
 			    italics    	FALSE
-			    underline  	FALSE
+			    underline  	TRUE
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@8
-			    location   	(928, 1274)
+			    Parent_View 	@11
+			    location   	(1856, 432)
+			    fill_color 	13434879
 			    anchor_loc 	1
 			    nlines     	2
-			    max_width  	630
+			    max_width  	282
 			    justify    	0
-			    label      	"支付促销订单")
+			    label      	"网站")
 			icon_style 	"Icon"
 			line_color 	3342489
 			fill_color 	13434879
-			quidu      	"6278E7AD01F4"
-			height     	118)
-		    (object ClassView "Class" "Use Case View::用户" @9
-			ShowCompartmentStereotypes 	TRUE
-			IncludeAttribute 	TRUE
-			IncludeOperation 	TRUE
-			location   	(400, 912)
+			quidu      	"62935AE8033B"
+			width      	300
+			height     	1118
+			icon_height 	0
+			icon_width 	0
+			icon_y_offset 	0
+			annotation 	1
+			Focus_Of_Control 	(object Focus_Of_Control "" @12
+			    location   	(1856, 512)
+			    line_color 	3342489
+			    InterObjView 	@11
+			    height     	90
+			    y_coord    	0
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @13
+			    location   	(1856, 816)
+			    line_color 	3342489
+			    InterObjView 	@11
+			    height     	105
+			    y_coord    	15
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @14
+			    location   	(1856, 1040)
+			    line_color 	3342489
+			    InterObjView 	@11
+			    height     	105
+			    y_coord    	15
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @15
+			    location   	(1856, 1248)
+			    line_color 	3342489
+			    InterObjView 	@11
+			    height     	107
+			    y_coord    	17
+			    Nested     	FALSE))
+		    (object InterMessView "1.1发布促售信息" @16
+			location   	(16, 816)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -336,136 +359,37 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@9
-			    location   	(400, 1072)
-			    anchor_loc 	1
-			    nlines     	2
-			    max_width  	325
-			    justify    	0
-			    label      	"用户")
-			icon       	"Actor"
-			icon_style 	"Icon"
-			line_color 	3342489
-			quidu      	"6278E2C8014B"
-			annotation 	8
-			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$3" @10
-			location   	(637, 865)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"6278E8780165"
-			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$4" @11
-				Parent_View 	@10
-				location   	(237, -47)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"6278E87A01AA"
-				client     	@10
-				supplier   	@7
-				vertices   	(list Points
-				    (637, 865)
-				    (818, 833))
-				line_style 	0)
-			    (object RoleView "$UNNAMED$5" @12
-				Parent_View 	@10
-				location   	(237, -47)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"6278E87A01AC"
-				client     	@10
-				supplier   	@9
-				vertices   	(list Points
-				    (637, 865)
-				    (457, 897))
-				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$6" @13
-			location   	(637, 1011)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			stereotype 	TRUE
-			line_color 	3342489
-			quidu      	"6278E87D0398"
-			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$7" @14
-				Parent_View 	@13
-				location   	(237, 99)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"6278E87F017C"
-				client     	@13
-				supplier   	@8
-				vertices   	(list Points
-				    (637, 1011)
-				    (818, 1088))
-				line_style 	0)
-			    (object RoleView "$UNNAMED$8" @15
-				Parent_View 	@13
-				location   	(237, 99)
-				stereotype 	TRUE
-				line_color 	3342489
-				quidu      	"6278E87F017E"
-				client     	@13
-				supplier   	@9
-				vertices   	(list Points
-				    (637, 1011)
-				    (457, 935))
-				line_style 	0)))
-		    (object NoteView @16
-			location   	(1424, 640)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
+			label      	(object SegLabel @17
 			    Parent_View 	@16
-			    location   	(1105, 96)
-			    fill_color 	13434879
-			    nlines     	21
-			    max_width  	602
-			    justify    	1
-			    label      	
-|用例名称：发布促销信息
-|用例标识：无
-|涉及的参与者：商家
-|描述：商家在商品分类中的某一个分类中确定出一个折扣政策和优惠时间，由系统产生促销信息
-|规格说明：
-|   前置条件：商家已经在平台注册
-|   后置条件：促销信息后台数据成功在网上公布
-|   正常事件流：
-|商家正常登录平台，输入选择优惠信息，由系统正常输出促销信息
-|   异常事件流：
-|（1）系统可能无法连接到数据库导出促销信息
-|（2）商家可能输错了优惠信息，需要修改信息
-			    )
+			    location   	(1151, 772)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"62935AE80336"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	328
+			    justify    	0
+			    label      	"1.1发布促售信息"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
 			line_color 	3342489
-			fill_color 	13434879
-			width      	662
-			height     	1100)
-		    (object NoteView @17
-			location   	(2240, 640)
+			client     	@2
+			supplier   	@11
+			Focus_Src  	@4
+			Focus_Entry 	@13
+			origin     	(463, 816)
+			terminus   	(1840, 816)
+			ordinal    	0)
+		    (object InterMessView "1.1将促销信息公布在网站上" @18
+			location   	(16, 921)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -475,68 +399,195 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@17
-			    location   	(1921, 96)
-			    fill_color 	13434879
-			    nlines     	21
-			    max_width  	602
-			    justify    	1
-			    label      	
-|用例名称：获得促销订单
-|用例标识：无
-|涉及的参与者：用户
-|描述：用户在促销活动中选择促销商品，选择购买数量，由系统生成促销订单
-|规格说明：
-|   前置条件：用户已经在平台注册
-|   后置条件：促销订单成功生成并公布
-|   正常事件流：
-|用户在促销活动中选择促销商品，选择购买数量，由系统生成促销订单
-|   异常事件流：
-|（1）系统可能无法连接到数据库导出促销信息
-|（2）用户可能选错了购买数量，需要撤销订单
-			    )
-			line_color 	3342489
-			fill_color 	13434879
-			width      	662
-			height     	1100)
-		    (object NoteView @18
-			location   	(2992, 640)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object ItemLabel
+			label      	(object SegLabel @19
 			    Parent_View 	@18
-			    location   	(2673, 96)
-			    fill_color 	13434879
-			    nlines     	21
-			    max_width  	602
-			    justify    	1
-			    label      	
-|用例名称：支付促销订单
-|用例标识：无
-|涉及的参与者：用户
-|描述：用户通过网站提供的在线支付平台确认并支付该订单，该促销订单即完成支付
-|规格说明：
-|   前置条件：系统已经生成了促销订单
-|   后置条件：促销订单成功
-|支付
-|   正常事件流：
-|用户在平台上选择需要支付的促销订单，通过在线支付平台支付该订单。
-|   异常事件流：
-|（1）该促销订单已经过了促销时间
-|（2）用户已完成支付但系统显示促销订单未完成
-			    )
+			    location   	(1152, 877)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"62935AE80337"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	547
+			    justify    	0
+			    label      	"1.1将促销信息公布在网站上"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
 			line_color 	3342489
-			fill_color 	13434879
-			width      	662
-			height     	1100)))))
+			client     	@11
+			supplier   	@2
+			Focus_Src  	@13
+			Focus_Entry 	@5
+			origin     	(1840, 921)
+			terminus   	(464, 921)
+			ordinal    	1)
+		    (object InterMessView "1.2购买促销商品" @20
+			location   	(16, 1040)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @21
+			    Parent_View 	@20
+			    location   	(1503, 996)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"62935AE8033D"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	328
+			    justify    	0
+			    label      	"1.2购买促销商品"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@6
+			supplier   	@11
+			Focus_Src  	@8
+			Focus_Entry 	@14
+			origin     	(1167, 1040)
+			terminus   	(1840, 1040)
+			ordinal    	2)
+		    (object InterMessView "1.2返回促销订单" @22
+			location   	(16, 1145)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @23
+			    Parent_View 	@22
+			    location   	(1504, 1101)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"62935AE80340"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	328
+			    justify    	0
+			    label      	"1.2返回促销订单"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
+			line_color 	3342489
+			client     	@11
+			supplier   	@6
+			Focus_Src  	@14
+			Focus_Entry 	@9
+			origin     	(1840, 1145)
+			terminus   	(1168, 1145)
+			ordinal    	3)
+		    (object InterMessView "1.3支付促销订单" @24
+			location   	(16, 1250)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @25
+			    Parent_View 	@24
+			    location   	(1503, 1206)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"62935AE80341"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	328
+			    justify    	0
+			    label      	"1.3支付促销订单"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@6
+			supplier   	@11
+			Focus_Src  	@8
+			Focus_Entry 	@15
+			origin     	(1167, 1250)
+			terminus   	(1840, 1250)
+			ordinal    	4)
+		    (object InterMessView "1.3完成商品购买" @26
+			location   	(16, 1355)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @27
+			    Parent_View 	@26
+			    location   	(1504, 1311)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"62935AE80342"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	328
+			    justify    	0
+			    label      	"1.3完成商品购买"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
+			line_color 	3342489
+			client     	@11
+			supplier   	@6
+			Focus_Src  	@15
+			Focus_Entry 	@10
+			origin     	(1840, 1355)
+			terminus   	(1168, 1355)
+			ordinal    	5)))))
     root_category 	(object Class_Category "Logical View"
 	quid       	"39C9260C00D5"
 	exportControl 	"Public"
@@ -569,7 +620,7 @@
 		origin_x   	0
 		origin_y   	0
 		items      	(list diagram_item_list
-		    (object CategoryView "Logical View::java" @19
+		    (object CategoryView "Logical View::java" @28
 			location   	(208, 272)
 			font       	(object Font
 			    size       	10
@@ -581,7 +632,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@19
+			    Parent_View 	@28
 			    location   	(64, 188)
 			    nlines     	2
 			    max_width  	288
@@ -593,7 +644,7 @@
 			quidu      	"39C92661003B"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::javax" @20
+		    (object CategoryView "Logical View::javax" @29
 			location   	(656, 272)
 			font       	(object Font
 			    size       	10
@@ -605,7 +656,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@20
+			    Parent_View 	@29
 			    location   	(512, 188)
 			    nlines     	2
 			    max_width  	288
@@ -617,7 +668,7 @@
 			quidu      	"39C926610018"
 			width      	300
 			height     	180)
-		    (object CategoryView "Logical View::org" @21
+		    (object CategoryView "Logical View::org" @30
 			location   	(1104, 272)
 			font       	(object Font
 			    size       	10
@@ -629,7 +680,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@21
+			    Parent_View 	@30
 			    location   	(960, 188)
 			    nlines     	2
 			    max_width  	288
@@ -650,7 +701,7 @@
 		origin_x   	0
 		origin_y   	0
 		items      	(list diagram_item_list
-		    (object NoteView @22
+		    (object NoteView @31
 			location   	(224, 624)
 			font       	(object Font
 			    size       	10
@@ -665,7 +716,7 @@
 			fill_color 	12632256
 			width      	300
 			height     	132)
-		    (object NoteView @23
+		    (object NoteView @32
 			location   	(704, 624)
 			font       	(object Font
 			    size       	10
@@ -680,7 +731,7 @@
 			fill_color 	8421631
 			width      	300
 			height     	132)
-		    (object NoteView @24
+		    (object NoteView @33
 			location   	(1200, 624)
 			font       	(object Font
 			    size       	10
@@ -695,7 +746,7 @@
 			fill_color 	12615680
 			width      	300
 			height     	132)
-		    (object NoteView @25
+		    (object NoteView @34
 			location   	(1664, 624)
 			font       	(object Font
 			    size       	10
@@ -710,7 +761,7 @@
 			fill_color 	16777215
 			width      	300
 			height     	132)
-		    (object Label @26
+		    (object Label @35
 			location   	(81, 369)
 			font       	(object Font
 			    size       	12
@@ -725,7 +776,7 @@
 			max_width  	1163
 			justify    	1
 			label      	"J2EE: Java 2 Platform, Enterprise Edition - v 1.2.1")
-		    (object Label @27
+		    (object Label @36
 			location   	(96, 608)
 			font       	(object Font
 			    size       	10
@@ -740,7 +791,7 @@
 			max_width  	268
 			justify    	1
 			label      	"Abstract Class")
-		    (object Label @28
+		    (object Label @37
 			location   	(592, 608)
 			font       	(object Font
 			    size       	10
@@ -755,7 +806,7 @@
 			max_width  	225
 			justify    	1
 			label      	"Final Class")
-		    (object Label @29
+		    (object Label @38
 			location   	(1104, 608)
 			font       	(object Font
 			    size       	10
@@ -770,7 +821,7 @@
 			max_width  	206
 			justify    	1
 			label      	"Interface")
-		    (object Label @30
+		    (object Label @39
 			location   	(1552, 608)
 			font       	(object Font
 			    size       	10
@@ -814,7 +865,7 @@
 		origin_y   	0
 		items      	(list diagram_item_list)))
 	category   	"Logical View"
-	quidu      	"6278DF1102DC")
+	quidu      	"62935AC603AA")
     process_structure 	(object Processes
 	quid       	"39C9260C00D8"
 	ProcsNDevs 	(list
